@@ -10,7 +10,7 @@ function Home() {
     <>
       <h1>Pokémon Quiz</h1>
       <button><Link to="/pokedex-quiz/In-Order-Quiz">Pokédex Order</Link></button>
-      <button><Link to="/pokedex-quiz/In-Order-Quiz">Pokédex Order</Link></button>
+      <button><Link to="/pokedex-quiz/Random-Order-Quiz">Random Order</Link></button>
     </>
   )
 }
