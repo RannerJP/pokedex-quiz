@@ -28,15 +28,30 @@ function InOrderQuiz() {
 
   }
 
+  const normalizeName = (name) => {
+    name = name.toLowerCase();
+    name = name.normalize("NFD");
+    name = name.replace(/[^0-9a-z]/gi, '');
+    return name;
+  }
+
+  const updatePoints = () => {
+    setTotalPoints((prev) => (prev + guessingPoints + hintPoints));
+    setGuessingPoints(10);
+    setHintPoints(10);
+    setUserAnswer("");
+    setNameHintUsed(false);
+  }
+
+  const loadNextPokemon = () => {
+    setCurrentIndex((prev) => (prev + 1));
+  }
+
   const checkAnswer = (e) =>{
     e.preventDefault();
-    if(userAnswer.toLowerCase() === pokedexNumbers[currentIndex-1].toLowerCase()){
-      setTotalPoints((prev) => (prev + guessingPoints + hintPoints));
-      setCurrentIndex((prev) => (prev + 1));
-      setGuessingPoints(10);
-      setHintPoints(10);
-      setUserAnswer("");
-      setNameHintUsed(false);
+    if(normalizeName(userAnswer) === normalizeName(pokedexNumbers[currentIndex-1])){
+      updatePoints();
+      loadNextPokemon();
     }
     else{
       if(guessingPoints != 0){
