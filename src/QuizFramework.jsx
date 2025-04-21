@@ -1,41 +1,50 @@
-import { useState, useEffect, useRef} from 'react';
+import { useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./QuizFramework.css";
 import pokedex from "./data/pokemon.json";
 
 
-function QuizFramework({updateIndex}) {
+function QuizFramework({updatePokemon}) {
   const [userAnswer, setUserAnswer] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [pokedexNumber, setPokedexNumber] = useState(0);
   const [totalPoints, setTotalPoints] = useState(0);
   const [guessingPoints, setGuessingPoints] = useState(10);
   const [hintPoints, setHintPoints] = useState(10);
   const [nameHintedUsed, setNameHintUsed] = useState(false);
-  const [pokedexNumbers, setPokedexNumbers] = useState(null);
+  const [unguessedPokemon, setUnguessedPokemon] = useState(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if(!pokedexNumbers){
+    if(!unguessedPokemon){
       const itemsArray = pokedex;
       const pokemonMap = itemsArray.reduce((acc, pokemon, index) => {
-        acc[index] = pokemon;
+        acc[index+1] = pokemon;
         return acc;
       }, {});
-      setPokedexNumbers(pokemonMap);
+      setUnguessedPokemon(pokemonMap);
     }
-  }, [[pokedexNumbers]]);
+  }, [[unguessedPokemon]]);
 
   useEffect(() => {
-    if(currentIndex === 0 && pokedexNumbers){
-      const start = updateIndex(Object.keys(pokedexNumbers).length);
-      setCurrentIndex(start);
+    if(pokedexNumber === 0 && unguessedPokemon){
+      const start = updatePokemon(Object.keys(unguessedPokemon).length);
+      setPokedexNumber(parseInt(Object.keys(unguessedPokemon)[start-1]));
     }
-  }, [[currentIndex]]);
+  }, [[pokedexNumber, unguessedPokemon]]);
+
+  const pokedexCompleted = () =>{
+    return Object.keys(unguessedPokemon).length === 1 ? true : false;
+  }
 
   const loadNextPokemon = () => {
-    const newPokedexNumbers = {...pokedexNumbers};
-    delete newPokedexNumbers[currentIndex-1];
-    setPokedexNumbers(newPokedexNumbers);
-    const index = updateIndex(Object.keys(pokedexNumbers).length - 1);
-    setCurrentIndex(index);
+    if(pokedexCompleted()){
+      navigate(`/pokedex-quiz/win/${totalPoints}`, { replace: true });
+    }
+    const newUnguessedPokemon = {...unguessedPokemon};
+    delete newUnguessedPokemon[pokedexNumber];
+    setUnguessedPokemon(newUnguessedPokemon);
+    const index = updatePokemon(Object.keys(unguessedPokemon).length);
+    setPokedexNumber(parseInt(Object.keys(newUnguessedPokemon)[index-1]));
   }
 
   const showNameHint = () =>{
@@ -63,7 +72,7 @@ function QuizFramework({updateIndex}) {
 
   const checkAnswer = (e) =>{
     e.preventDefault();
-    if(normalizeName(userAnswer).includes(normalizeName(pokedexNumbers[currentIndex-1]))){
+    if(normalizeName(userAnswer).includes(normalizeName(unguessedPokemon[pokedexNumber]))){
       updatePoints();
       loadNextPokemon();
     }
@@ -76,7 +85,7 @@ function QuizFramework({updateIndex}) {
 
   return (
     <>
-      {pokedexNumbers && currentIndex !== 0 ? (
+      {unguessedPokemon && pokedexNumber !== 0 ?  (
         <>
           <h1>Quiz Page</h1>
           <h2>Total Points: {totalPoints}</h2>
@@ -84,12 +93,12 @@ function QuizFramework({updateIndex}) {
             <h2>Hint Points: {hintPoints}</h2>
             <h2>Guess Points: {guessingPoints}</h2>
           </div>
-          <h2>Who is #{currentIndex}</h2>
+          <h2>Who is #{pokedexNumber}</h2>
           <h3>
             {nameHintedUsed && (
               <p>
-                {pokedexNumbers[currentIndex - 1][0]}***
-                {pokedexNumbers[currentIndex - 1].slice(-1)}
+                {unguessedPokemon[pokedexNumber][0]}***
+                {unguessedPokemon[pokedexNumber].slice(-1)}
               </p>
             )}
           </h3>
