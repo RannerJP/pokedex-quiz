@@ -4,15 +4,15 @@ import QuizFramework from "./QuizFramework.jsx";
 
 function RandomOrderQuiz() {
 
-  const updateIndex = (currentIndex) =>{
-    const newIndex = Math.floor(Math.random() * currentIndex);
+  const updatePokemon = (unguessedPokemon) =>{
+    const newIndex = Math.floor(Math.random() * unguessedPokemon);
     return newIndex + 1;
   }
 
   return (
     <>
       <QuizFramework
-        updateIndex={updateIndex}
+        updatePokemon={updatePokemon}
       >
       </QuizFramework>
     </>
