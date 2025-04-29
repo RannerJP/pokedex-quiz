@@ -36,9 +36,16 @@ function QuizFramework({updatePokemon}) {
     return Object.keys(unguessedPokemon).length === 1 ? true : false;
   }
 
+  const updateTotalPoints = () =>{
+    const newPoints = totalPoints + guessingPoints + hintPoints;
+    setTotalPoints(newPoints);
+    return newPoints;
+  }
+
   const loadNextPokemon = () => {
+    const newPoints = updateTotalPoints();
     if(pokedexCompleted()){
-      navigate(`/pokedex-quiz/win/${totalPoints}`, { replace: true });
+      navigate(`/pokedex-quiz/win/${newPoints}`, { replace: true });
     }
     const newUnguessedPokemon = {...unguessedPokemon};
     delete newUnguessedPokemon[pokedexNumber];
@@ -63,7 +70,6 @@ function QuizFramework({updatePokemon}) {
   }
 
   const updatePoints = () => {
-    setTotalPoints((prev) => (prev + guessingPoints + hintPoints));
     setGuessingPoints(10);
     setHintPoints(10);
     setUserAnswer("");
