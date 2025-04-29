@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom';
 import './Home.css'
 
 function Home() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <h1>Pokémon Quiz</h1>
-      <button><Link to="/pokedex-quiz/In-Order-Quiz">Pokédex Order</Link></button>
-      <button><Link to="/pokedex-quiz/Random-Order-Quiz">Random Order</Link></button>
-    </>
+    <div className='homepage'>
+      <h1>Pokémon Quizzes</h1>
+      <div className='buttons'>
+        <Link to="/pokedex-quiz/In-Order-Quiz" className='linkButton'>Pokédex In Order</Link>
+        <Link to="/pokedex-quiz/Random-Order-Quiz" className='linkButton'>Pokédex Random Order</Link>
+      </div>
+      
+    </div>
   )
 }
 
