@@ -6,7 +6,7 @@ This project is a simple quiz to name the pokedex in order (Or randomly) based o
 I enjoy doing the pokemon quiz on sporcle [such as this one](https://www.sporcle.com/games/g/pokemon) and wanted to do a similar quiz but for the pokedex. [Pokemon Quiz](https://pkmnquiz.com/) does have something similar but there is no option for a randomized pokedex, just in order.
 
 ## Features
-- A hint system (Gives the first and last letter of the pokemon or a silhouette of the pokemon)
+- A hint system which gives the first and last letter of the pokemon or a silhouette of the pokemon (TO BE ADDED)
 - A point system (I want to see my score increase as I get better without using hints)
 - A mode for in order pokedex and random order
 
