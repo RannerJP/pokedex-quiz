@@ -1,5 +1,40 @@
 .points{
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: min(2vh, 2vw);
+}
+h1, h2, h3{
+    padding: 0;
+}
+.quizFramework h1, .quizFramework h2, .quizFramework h3, .quizFramework p{
+    margin: 0px;
+}
+.quizFramework h1{
+    font-size: min(10vh, 10vw);
+}
+.quizFramework h2{
+    font-size: min(5vh, 5vw);
+    text-decoration: none;
+}
+.quizFramework p{
+    font-size: min(3vh, 3vw);
+}
+
+.quizFramework input{
+    padding: 0;
+    width: 50%;
+    height: 4vh;
+    font-size: 2vh;
+}
+.quizFramework button{
+    width: 25%;
+    height: 4vh;
+    font-size: min(2vh, 3vw);
+    border-radius: 0;
+}
+.quizFramework img{
+    width: 62vw;
+    aspect-ratio: 2/1;
+    font-size: min(2vh, 3vw);
+    border-radius: 0;
 }
