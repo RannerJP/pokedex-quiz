@@ -9,7 +9,7 @@ function QuizFramework({updatePokemon}) {
   const [pokedexNumber, setPokedexNumber] = useState(0);
   const [totalPoints, setTotalPoints] = useState(0);
   const [guessingPoints, setGuessingPoints] = useState(10);
-  const [hintPoints, setHintPoints] = useState(10);
+  const [hintPoints, setHintPoints] = useState(5);
   const [nameHintedUsed, setNameHintUsed] = useState(false);
   const [unguessedPokemon, setUnguessedPokemon] = useState(null);
   const navigate = useNavigate()
@@ -92,22 +92,15 @@ function QuizFramework({updatePokemon}) {
   return (
     <>
       {unguessedPokemon && pokedexNumber !== 0 ?  (
-        <>
-          <h1>Quiz Page</h1>
+        <div className="quizFramework">
+          <h1>Pokedex Quiz</h1>
+          <img src="src/assets/whos-that-pokemon.avif" alt="Who's that pokemon screencap with no pokemon silhouette" />
           <h2>Total Points: {totalPoints}</h2>
           <div className='points'>
-            <h2>Hint Points: {hintPoints}</h2>
-            <h2>Guess Points: {guessingPoints}</h2>
+            <p>Hint Points: {hintPoints}</p>
+            <p>Guess Points: {guessingPoints}</p>
           </div>
-          <h2>Who is #{pokedexNumber}</h2>
-          <h3>
-            {nameHintedUsed && (
-              <p>
-                {unguessedPokemon[pokedexNumber][0]}***
-                {unguessedPokemon[pokedexNumber].slice(-1)}
-              </p>
-            )}
-          </h3>
+          <p>Which Pokemon is <strong>#{pokedexNumber}</strong></p>
           <form onSubmit={checkAnswer}>
             <input
               type="text"
@@ -117,7 +110,13 @@ function QuizFramework({updatePokemon}) {
             <button type="submit">Submit</button>
           </form>
           <button onClick={showNameHint}>Name Hint</button>
-        </>
+          {nameHintedUsed && (
+              <p>
+                {unguessedPokemon[pokedexNumber][0]}...
+                {unguessedPokemon[pokedexNumber].slice(-1)}
+              </p>
+            )}
+        </div>
       ) : (
         <h1>Loading...</h1>
       )}
